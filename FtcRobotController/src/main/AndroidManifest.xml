@@ -36,6 +36,18 @@
     android:icon="@drawable/ic_launcher"
     android:label="@string/app_name"
     android:theme="@style/AppTheme" >
+
+
+    <activity
+       android:name=".aaas.RobotControllerDriverActivity"
+       android:label="@string/null_hardware_mode" >
+       <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+
     <activity
       android:name=".FtcRobotControllerActivity"
       android:configChanges="orientation|screenSize"
@@ -44,7 +56,7 @@
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.LAUNCHER" />
+     <!--   <category android:name="android.intent.category.LAUNCHER" /> -->
 
         <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
       </intent-filter>
@@ -69,6 +81,9 @@
       android:name=".FtcRobotControllerSettingsActivity"
       android:label="@string/settings_activity" >
     </activity>
+
+
+
     <activity
       android:name=".FtcConfigurationActivity"
       android:configChanges="orientation|screenSize"

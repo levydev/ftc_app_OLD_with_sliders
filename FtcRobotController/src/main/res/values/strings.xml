@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+  <string name="null_hardware_mode">Null Hardware Mode</string>
+
+
   <string name="app_name">FTC Robot Controller</string>
   <string name="ok">OK</string>
 

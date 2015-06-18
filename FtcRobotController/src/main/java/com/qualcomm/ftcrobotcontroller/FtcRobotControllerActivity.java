@@ -58,6 +58,7 @@ import com.qualcomm.ftccommon.FtcRobotControllerService;
 import com.qualcomm.ftccommon.FtcRobotControllerService.FtcRobotControllerBinder;
 import com.qualcomm.ftccommon.Restarter;
 import com.qualcomm.ftccommon.UpdateUI;
+import com.qualcomm.ftcrobotcontroller.aaas.RobotControllerDriverActivity;
 import com.qualcomm.modernrobotics.ModernRoboticsHardwareFactory;
 import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -247,6 +248,13 @@ public class FtcRobotControllerActivity extends Activity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
+
+
+      case R.id.action_null_hardware_mode:
+            startActivity(new Intent(getBaseContext(), RobotControllerDriverActivity.class));
+            return true;
+
+
       case R.id.action_restart_robot:
         dimmer.handleDimTimer();
         Toast.makeText(context, "Restarting Robot", Toast.LENGTH_SHORT).show();
@@ -296,6 +304,8 @@ public class FtcRobotControllerActivity extends Activity {
     callback.robotUpdate(controllerService.getRobotStatus());
     requestRobotSetup();
   }
+
+
 
   private void requestRobotSetup() {
     if (controllerService == null) return;

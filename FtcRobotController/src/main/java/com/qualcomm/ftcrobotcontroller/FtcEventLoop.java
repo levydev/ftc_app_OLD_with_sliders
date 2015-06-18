@@ -35,7 +35,7 @@ import com.qualcomm.ftccommon.CommandList;
 import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.ftccommon.FtcEventLoopHandler;
 import com.qualcomm.ftccommon.UpdateUI;
-import com.qualcomm.ftcrobotcontroller.opmodes.FtcOpModeRegister;
+import com.qualcomm.ftcrobotcontroller.aaas.AAASOpModeRegister;
 import com.qualcomm.robotcore.eventloop.EventLoop;
 import com.qualcomm.robotcore.eventloop.EventLoopManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
@@ -85,7 +85,7 @@ public class FtcEventLoop implements EventLoop, BatteryChecker.BatteryWatcher {
   public void init(EventLoopManager eventLoopManager) throws RobotCoreException, InterruptedException {
     DbgLog.msg("======= INIT START =======");
 
-    opModeManager.registerOpModes(new FtcOpModeRegister());
+    opModeManager.registerOpModes(new AAASOpModeRegister());
 
     ftcEventLoopHandler.init(eventLoopManager);
 
