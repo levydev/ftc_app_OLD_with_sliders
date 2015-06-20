@@ -2,20 +2,23 @@ package com.qualcomm.ftcrobotcontroller.aaas.hardware;
 
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
 
-public class IrSeekerSensorComponent extends HardwareComponent {
+public class IrSeekerSensorComponent extends SensorComponent {
 
     private IrSeekerSensor irSeeker;
 
 
     public IrSeekerSensorComponent(HardwareManager hardwareManager, String componentName) {
 
-        super(hardwareManager);
+        super(hardwareManager , componentName);
 
         if (!isDriverDebugMode() ) {
             this.irSeeker = getHardwareManager().getHardwareMap().irSeekerSensor.get(componentName);
         }
         else {
-            getHardwareManager().addSensor(this);
+            getDebugMap().put("signalDetected" , "false");
+            getDebugMap().put("angle" , "");
+            getDebugMap().put("strength" , "");
+
         }
 
 

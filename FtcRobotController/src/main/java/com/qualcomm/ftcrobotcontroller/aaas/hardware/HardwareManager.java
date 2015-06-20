@@ -14,8 +14,8 @@ public class HardwareManager {
     private HardwareMap hardwareMap;
     private boolean driverDebugMode = false;
     private RobotControllerDriverActivity robotControllerDriverActivity;
-    private List sensors = new ArrayList();
-    private List motors = new ArrayList();
+    private List<SensorComponent> sensors = new ArrayList<SensorComponent>();
+    private List <MotorComponent> motors = new ArrayList<MotorComponent> ();
 
     public HardwareManager(HardwareMap hardwareMap ) {
 
@@ -34,21 +34,28 @@ public class HardwareManager {
         return driverDebugMode;
     }
 
-    public void setDriverDebugMode(boolean driverDebugMode, RobotControllerDriverActivity robotControllerDriverActivity) {
-        this.driverDebugMode = driverDebugMode;
+    public void setDriverDebugMode(RobotControllerDriverActivity robotControllerDriverActivity) {
+        this.driverDebugMode = true;
         this.robotControllerDriverActivity = robotControllerDriverActivity;
     }
 
 
-    public void addSensor(HardwareComponent hardwareComponent) {
+    public void addSensor(SensorComponent hardwareComponent) {
 
         this.sensors.add(hardwareComponent);
     }
 
-    public void addMotor(HardwareComponent hardwareComponent) {
+    public void addMotor(MotorComponent hardwareComponent) {
 
         this.motors.add(hardwareComponent);
     }
 
+    public List<SensorComponent>  getSensors() {
+        return sensors;
+    }
+
+    public List <MotorComponent> getMotors() {
+        return motors;
+    }
 
 }

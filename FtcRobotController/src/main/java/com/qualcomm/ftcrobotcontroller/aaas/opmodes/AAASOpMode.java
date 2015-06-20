@@ -33,11 +33,12 @@ public abstract class AAASOpMode extends OpMode {
 
     public void startInDebugMode(RobotControllerDriverActivity robotControllerDriverActivity) {
 
-        getHardwareManager().setDriverDebugMode(true , robotControllerDriverActivity);
+        getHardwareManager().setDriverDebugMode( robotControllerDriverActivity);
         this.start();
 
 
     }
+
 
 
 }

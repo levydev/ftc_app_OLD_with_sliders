@@ -2,27 +2,22 @@ package com.qualcomm.ftcrobotcontroller.aaas.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class DCMotorComponent extends HardwareComponent {
+public class DCMotorComponent extends MotorComponent {
 
     private DcMotor dcMotor;
 
 
     public DCMotorComponent(HardwareManager hardwareManager, String componentName) {
 
-        super(hardwareManager);
+        super(hardwareManager, componentName);
 
         if (!isDriverDebugMode() ) {
             this.dcMotor = getHardwareManager().getHardwareMap().dcMotor.get(componentName);
         }
         else {
-            hardwareManager.addMotor(this);
+            getDebugMap().put("Power" , "");
+            getDebugMap().put("Direction" , "");
         }
-
-
-    }
-
-    protected boolean isDriverDebugMode() {
-        return getHardwareManager().isDriverDebugMode();
 
     }
 
