@@ -1,7 +1,5 @@
-package com.qualcomm.ftcrobotcontroller.aaas.hardware;
+package org.aaas.stem.first.ftc.hardware;
 
-
-import android.widget.EditText;
 
 import java.util.HashMap;
 import java.util.Map;

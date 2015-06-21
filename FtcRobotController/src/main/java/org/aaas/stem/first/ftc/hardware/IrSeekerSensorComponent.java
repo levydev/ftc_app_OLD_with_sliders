@@ -1,4 +1,4 @@
-package com.qualcomm.ftcrobotcontroller.aaas.hardware;
+package org.aaas.stem.first.ftc.hardware;
 
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
 
@@ -15,9 +15,9 @@ public class IrSeekerSensorComponent extends SensorComponent {
             this.irSeeker = getHardwareManager().getHardwareMap().irSeekerSensor.get(componentName);
         }
         else {
-            getDebugMap().put("signalDetected" , "false");
-            getDebugMap().put("angle" , "");
-            getDebugMap().put("strength" , "");
+            getDebugMap().put("signalDetected" , "true");
+            getDebugMap().put("angle" , "0.0");
+            getDebugMap().put("strength" , "0.0");
 
         }
 

@@ -1,9 +1,9 @@
 
 
-package com.qualcomm.ftcrobotcontroller.aaas.opmodes;
+package org.aaas.stem.first.ftc.opmodes;
 
-import com.qualcomm.ftcrobotcontroller.aaas.hardware.DCMotorComponent;
-import com.qualcomm.ftcrobotcontroller.aaas.hardware.IrSeekerSensorComponent;
+import org.aaas.stem.first.ftc.hardware.DCMotorComponent;
+import org.aaas.stem.first.ftc.hardware.IrSeekerSensorComponent;
 
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -47,6 +47,7 @@ public class IrSeekerOpMode extends AAASOpMode {
         motorRight = new DCMotorComponent(getHardwareManager(),"motor_2");
         motorLeft = new DCMotorComponent(getHardwareManager(),"motor_1");
 
+        motorRight.setDirection(DcMotor.Direction.FORWARD);
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
 		//arm = hardwareManager.servoFor("servo_1");
@@ -110,7 +111,7 @@ public class IrSeekerOpMode extends AAASOpMode {
             } else if (angle > 5 && angle < 60) {
                 // turn to the right and move forward.
                 left = MOTOR_POWER;
-                right = MOTOR_POWER - 0.05;
+                 right = MOTOR_POWER - 0.05;
             } else if (angle > 60) {
                 // point turn to right.
                 left = MOTOR_POWER;

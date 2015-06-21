@@ -7,11 +7,11 @@
     android:id="@+id/entire_screen"
     android:orientation="vertical">
 
-  <include layout="@layout/device_name"
-           android:id="@+id/device_name_header"/>
 
-    <include layout="@layout/header"
-           android:id="@+id/included_header"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView2" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
           android:layout_width="wrap_content"
           android:layout_height="63dp"
           android:layout_below="@+id/sensors"
-          android:text="Send" />
+          android:text="Send Once To OpMode.loop" />
 
 
         <LinearLayout
@@ -63,8 +63,16 @@
           android:text="" />
 
 
-
+        <Button
+            android:id="@+id/run_from_driver_app"
+            android:layout_width="wrap_content"
+            android:textStyle="italic"
+            android:layout_height="40dp"
+            android:layout_below="@+id/textErrorMessage"
+            android:text="Run From Driver App" />
 
     </RelativeLayout>
+
+    </ScrollView>
 
 </LinearLayout>

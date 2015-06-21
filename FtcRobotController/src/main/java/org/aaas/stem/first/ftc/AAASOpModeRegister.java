@@ -29,10 +29,10 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.qualcomm.ftcrobotcontroller.aaas;
+package org.aaas.stem.first.ftc;
 
 
-import com.qualcomm.ftcrobotcontroller.aaas.opmodes.IrSeekerOpMode;
+import org.aaas.stem.first.ftc.opmodes.IrSeekerOpMode;
 import com.qualcomm.ftcrobotcontroller.opmodes.NullOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
@@ -58,8 +58,8 @@ public class AAASOpModeRegister implements OpModeRegister {
      * If two or more op modes are registered with the same name, the app will display an error.
      */
 
-    manager.register("NullOp", NullOp.class);
-    manager.register("AAASIrSeeker", IrSeekerOpMode.class);
+
+    manager.register("IrSeekerOpMode", IrSeekerOpMode.class);
 
 
   }

@@ -1,10 +1,8 @@
-package com.qualcomm.ftcrobotcontroller.aaas.hardware;
+package org.aaas.stem.first.ftc.hardware;
 
 
 import com.qualcomm.ftcrobotcontroller.aaas.RobotControllerDriverActivity;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.ArrayList;
 import java.util.List;

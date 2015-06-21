@@ -1,8 +1,8 @@
-package com.qualcomm.ftcrobotcontroller.aaas.opmodes;
+package org.aaas.stem.first.ftc.opmodes;
 
 
 import com.qualcomm.ftcrobotcontroller.aaas.RobotControllerDriverActivity;
-import com.qualcomm.ftcrobotcontroller.aaas.hardware.HardwareManager;
+import org.aaas.stem.first.ftc.hardware.HardwareManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 

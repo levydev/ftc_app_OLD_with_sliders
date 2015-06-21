@@ -3,26 +3,24 @@
 package com.qualcomm.ftcrobotcontroller.aaas;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity;
 import com.qualcomm.ftcrobotcontroller.R;
-import com.qualcomm.ftcrobotcontroller.aaas.hardware.HardwareComponent;
-import com.qualcomm.ftcrobotcontroller.aaas.hardware.SensorComponent;
-import com.qualcomm.ftcrobotcontroller.aaas.hardware.MotorComponent;
-import com.qualcomm.ftcrobotcontroller.aaas.hardware.HardwareManager;
-import com.qualcomm.ftcrobotcontroller.aaas.opmodes.AAASOpMode;
-import com.qualcomm.ftcrobotcontroller.aaas.opmodes.IrSeekerOpMode;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import org.aaas.stem.first.ftc.hardware.HardwareComponent;
+import org.aaas.stem.first.ftc.hardware.SensorComponent;
+import org.aaas.stem.first.ftc.hardware.MotorComponent;
+import org.aaas.stem.first.ftc.hardware.HardwareManager;
+import org.aaas.stem.first.ftc.opmodes.AAASOpMode;
+import org.aaas.stem.first.ftc.opmodes.IrSeekerOpMode;
 
 
 public class RobotControllerDriverActivity extends Activity {
@@ -51,8 +49,8 @@ public class RobotControllerDriverActivity extends Activity {
        addHardwareComponentView(hc , motorListView , false);
     }
 
-      Button sendButton = (Button) findViewById(R.id.send_button);
-      sendButton.setOnClickListener(new View.OnClickListener() {
+    Button sendButton = (Button) findViewById(R.id.send_button);
+    sendButton.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
              // Toast.makeText(getApplicationContext(), "msg msg", Toast.LENGTH_SHORT).show();
@@ -66,6 +64,17 @@ public class RobotControllerDriverActivity extends Activity {
               }
           }
       });
+
+      Button runFromDriverApp = (Button) findViewById(R.id.run_from_driver_app);
+      runFromDriverApp.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              startActivity(new Intent(getBaseContext(), FtcRobotControllerActivity.class));
+              finish();
+          }
+      });
+
+
 
 
   }
@@ -81,7 +90,7 @@ public class RobotControllerDriverActivity extends Activity {
 
         parentLayout.addView(rowLayout);
 
-        return parentLayout;
+        return rowLayout;
 
 
     }
@@ -92,12 +101,16 @@ public class RobotControllerDriverActivity extends Activity {
 
         TextView label = new TextView(this);
         label.setText(hardwareComponent.getName());
+        label.setTypeface(null, Typeface.BOLD);
         rowLayout.addView(label);
 
         for  (String  keyName :  hardwareComponent.getKeyNames() ) {
             if( keyName.equals("name")) {
                 continue;
             }
+
+            rowLayout = rowLayoutOn(listView);
+
             label = new TextView(this);
             label.setText(keyName);
             rowLayout.addView(label);
@@ -112,6 +125,9 @@ public class RobotControllerDriverActivity extends Activity {
             }
             else {
                 TextView valueView = new TextView(this);
+                LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                llp.setMargins(50, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
+                valueView.setLayoutParams(llp);
                 rowLayout.addView(valueView);
                 ((MotorComponent)hardwareComponent).addDebugView(keyName, valueView);
             }

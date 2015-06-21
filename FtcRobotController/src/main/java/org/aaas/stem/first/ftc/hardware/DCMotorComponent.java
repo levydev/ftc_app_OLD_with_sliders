@@ -1,4 +1,4 @@
-package com.qualcomm.ftcrobotcontroller.aaas.hardware;
+package org.aaas.stem.first.ftc.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
