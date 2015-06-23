@@ -4,7 +4,7 @@ package org.aaas.stem.first.ftc.opmodes;
 
 import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import org.aaas.stem.first.ftc.hardware.DCMotorComponent;
+import org.aaas.stem.first.ftc.hardware.DcMotorComponent;
 import org.aaas.stem.first.ftc.hardware.IrSeekerSensorComponent;
 
 
@@ -18,26 +18,25 @@ import org.aaas.stem.first.ftc.hardware.IrSeekerSensorComponent;
  * Turn on the IR beacon. The robot will now follow the IR beacon. <br>
  * To stop the robot, turn the IR beacon off. <br>
  */
-public class IrSeekerOpMode extends AAASOpMode {
+public class IrSeekerOp extends AAASOpMode {
 
 	final static double MOTOR_POWER = 0.15; // Higher values will cause the robot to move faster
 	final static double HOLD_IR_SIGNAL_STRENGTH = 0.50; // Higher values will cause the robot to follow closer
 
     IrSeekerSensorComponent irSeeker;
-    private DCMotorComponent motorRight;
-    private DCMotorComponent motorLeft;
+    private DcMotorComponent motorRight;
+    private DcMotorComponent motorLeft;
 
-	public IrSeekerOpMode() {
+	public IrSeekerOp() {
 
 	}
 
 	@Override
 	public void start() {
         irSeeker = new IrSeekerSensorComponent(getHardwareManager(),"ir_seeker");
-        motorRight = new DCMotorComponent(getHardwareManager(),"motor_2");
-        motorLeft = new DCMotorComponent(getHardwareManager(),"motor_1");
+        motorRight = new DcMotorComponent(getHardwareManager(),"motor_2");
+        motorLeft = new DcMotorComponent(getHardwareManager(),"motor_1");
 
-        motorRight.setDirection(DcMotor.Direction.FORWARD);
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
 	}

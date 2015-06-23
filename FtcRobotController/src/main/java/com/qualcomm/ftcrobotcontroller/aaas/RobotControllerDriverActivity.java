@@ -20,19 +20,37 @@ import org.aaas.stem.first.ftc.hardware.SensorComponent;
 import org.aaas.stem.first.ftc.hardware.MotorComponent;
 import org.aaas.stem.first.ftc.hardware.HardwareManager;
 import org.aaas.stem.first.ftc.opmodes.AAASOpMode;
-import org.aaas.stem.first.ftc.opmodes.IrSeekerOpMode;
+import org.aaas.stem.first.ftc.opmodes.AutoRotateOp;
+import org.aaas.stem.first.ftc.opmodes.CompassCalibration;
+import org.aaas.stem.first.ftc.opmodes.IrSeekerOp;
+import org.aaas.stem.first.ftc.opmodes.K9AutoTime;
+import org.aaas.stem.first.ftc.opmodes.K9IrSeeker;
+import org.aaas.stem.first.ftc.opmodes.K9Line;
+import org.aaas.stem.first.ftc.opmodes.K9TankDrive;
+import org.aaas.stem.first.ftc.opmodes.K9TeleOp;
 
 
 public class RobotControllerDriverActivity extends Activity {
 
-  private AAASOpMode opMode = new IrSeekerOpMode();
 
-  private HardwareManager hardwareManager;
+    private AAASOpMode opMode;
+
+    private HardwareManager hardwareManager;
 
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    opMode = new AutoRotateOp();
+    //opMode = new CompassCalibration();
+    //opMode = new IrSeekerOp();
+    //opMode = new K9AutoTime();
+   // opMode = new K9IrSeeker();
+   // opMode = new K9Line();
+   //  opMode = new K9TankDrive();
+   // opMode = new K9TeleOp();
+
 
     opMode.startInDebugMode(this);
     hardwareManager = opMode.getHardwareManager();

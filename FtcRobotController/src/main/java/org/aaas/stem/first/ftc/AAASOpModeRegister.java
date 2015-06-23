@@ -32,8 +32,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package org.aaas.stem.first.ftc;
 
 
-import org.aaas.stem.first.ftc.opmodes.IrSeekerOpMode;
-import com.qualcomm.ftcrobotcontroller.opmodes.NullOp;
+import org.aaas.stem.first.ftc.opmodes.AutoRotateOp;
+import org.aaas.stem.first.ftc.opmodes.CompassCalibration;
+import org.aaas.stem.first.ftc.opmodes.IrSeekerOp;
+import org.aaas.stem.first.ftc.opmodes.K9AutoTime;
+import org.aaas.stem.first.ftc.opmodes.K9IrSeeker;
+import org.aaas.stem.first.ftc.opmodes.K9Line;
+import org.aaas.stem.first.ftc.opmodes.K9TankDrive;
+import org.aaas.stem.first.ftc.opmodes.K9TeleOp;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
@@ -59,7 +66,14 @@ public class AAASOpModeRegister implements OpModeRegister {
      */
 
 
-    manager.register("IrSeekerOpMode", IrSeekerOpMode.class);
+    manager.register("AutoRotateOp", AutoRotateOp.class);
+    manager.register("CompassCalibration", CompassCalibration.class);
+    manager.register("IrSeekerOp", IrSeekerOp.class);
+    manager.register("K9AutoTime", K9AutoTime.class);
+    manager.register("K9IrSeeker", K9IrSeeker.class);
+    manager.register("K9Line", K9Line.class);
+    manager.register("K9TankDrive", K9TankDrive.class);
+    manager.register("K9TeleOp", K9TeleOp.class);
 
 
   }

@@ -2,12 +2,12 @@ package org.aaas.stem.first.ftc.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class DCMotorComponent extends MotorComponent {
+public class DcMotorComponent extends MotorComponent {
 
     private DcMotor dcMotor;
 
 
-    public DCMotorComponent(HardwareManager hardwareManager, String componentName) {
+    public DcMotorComponent(HardwareManager hardwareManager, String componentName) {
 
         super(hardwareManager, componentName);
 
@@ -15,8 +15,8 @@ public class DCMotorComponent extends MotorComponent {
             this.dcMotor = getHardwareManager().getHardwareMap().dcMotor.get(componentName);
         }
         else {
-            getDebugMap().put("Power" , "");
-            getDebugMap().put("Direction" , "");
+            getDebugMap().put("power" , "");
+            getDebugMap().put("direction" , DcMotor.Direction.FORWARD.toString());
         }
 
     }
@@ -28,7 +28,7 @@ public class DCMotorComponent extends MotorComponent {
             this.dcMotor.setDirection(direction);
         }
         else {
-            this.getDebugMap().put("Direction", direction.name());
+            this.getDebugMap().put("direction", direction.name());
         }
 
     }
@@ -38,7 +38,7 @@ public class DCMotorComponent extends MotorComponent {
             this.dcMotor.setPower(power);
         }
         else {
-            this.getDebugMap().put("Power", Double.toString(power));
+            this.getDebugMap().put("power", Double.toString(power));
         }
     }
 

@@ -119,7 +119,7 @@ public class FtcRobotControllerActivity extends Activity {
       requestRobotRestart();
     }
 
-  }
+    }
 
   protected ServiceConnection connection = new ServiceConnection() {
     @Override
