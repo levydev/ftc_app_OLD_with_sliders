@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package org.aaas.stem.first.ftc;
 
 
+import org.aaas.stem.first.ftc.hardware.MotorComponent;
 import org.aaas.stem.first.ftc.opmodes.AutoRotateOp;
 import org.aaas.stem.first.ftc.opmodes.CompassCalibration;
 import org.aaas.stem.first.ftc.opmodes.IrSeekerOp;
@@ -44,12 +45,34 @@ import org.aaas.stem.first.ftc.opmodes.K9TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Register Op Modes
  */
 public class AAASOpModeRegister implements OpModeRegister {
 
-  /**
+   public final static List<Class> OP_MODE_REGISTRY_CLASSES = new ArrayList<Class>();
+
+    static {
+        OP_MODE_REGISTRY_CLASSES.addAll(
+
+            Arrays.asList(
+                    AutoRotateOp.class,
+                    CompassCalibration.class,
+                    IrSeekerOp.class,
+                    K9AutoTime.class,
+                    K9IrSeeker.class,
+                    K9Line.class,
+                    K9TankDrive.class,
+                    K9TeleOp.class
+            ));
+    }
+
+
+    /**
    * The Op Mode Manager will call this method when it wants a list of all
    * available op modes. Add your op mode to the list to enable it.
    *
@@ -65,15 +88,9 @@ public class AAASOpModeRegister implements OpModeRegister {
      * If two or more op modes are registered with the same name, the app will display an error.
      */
 
-
-    manager.register("AutoRotateOp", AutoRotateOp.class);
-    manager.register("CompassCalibration", CompassCalibration.class);
-    manager.register("IrSeekerOp", IrSeekerOp.class);
-    manager.register("K9AutoTime", K9AutoTime.class);
-    manager.register("K9IrSeeker", K9IrSeeker.class);
-    manager.register("K9Line", K9Line.class);
-    manager.register("K9TankDrive", K9TankDrive.class);
-    manager.register("K9TeleOp", K9TeleOp.class);
+    for  (Class cl :  OP_MODE_REGISTRY_CLASSES ) {
+        manager.register(cl.getSimpleName(), cl);
+    }
 
 
   }

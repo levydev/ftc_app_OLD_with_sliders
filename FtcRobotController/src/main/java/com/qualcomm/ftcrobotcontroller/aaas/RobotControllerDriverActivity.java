@@ -3,10 +3,14 @@
 package com.qualcomm.ftcrobotcontroller.aaas;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,47 +19,56 @@ import android.widget.TextView;
 
 import com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity;
 import com.qualcomm.ftcrobotcontroller.R;
+
+
 import org.aaas.stem.first.ftc.hardware.HardwareComponent;
+import org.aaas.stem.first.ftc.hardware.HardwareManager;
 import org.aaas.stem.first.ftc.hardware.SensorComponent;
 import org.aaas.stem.first.ftc.hardware.MotorComponent;
-import org.aaas.stem.first.ftc.hardware.HardwareManager;
 import org.aaas.stem.first.ftc.opmodes.AAASOpMode;
 import org.aaas.stem.first.ftc.opmodes.AutoRotateOp;
-import org.aaas.stem.first.ftc.opmodes.CompassCalibration;
-import org.aaas.stem.first.ftc.opmodes.IrSeekerOp;
-import org.aaas.stem.first.ftc.opmodes.K9AutoTime;
-import org.aaas.stem.first.ftc.opmodes.K9IrSeeker;
-import org.aaas.stem.first.ftc.opmodes.K9Line;
-import org.aaas.stem.first.ftc.opmodes.K9TankDrive;
-import org.aaas.stem.first.ftc.opmodes.K9TeleOp;
+
+import java.lang.reflect.Constructor;
 
 
 public class RobotControllerDriverActivity extends Activity {
 
+    public static final String SHARED_PREY_KEY = "sharedPrefKey";
+    private SharedPreferences sharedpreferences;
+    private HardwareManager hardwareManager;
 
     private AAASOpMode opMode;
-
-    private HardwareManager hardwareManager;
 
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    opMode = new AutoRotateOp();
-    //opMode = new CompassCalibration();
-    //opMode = new IrSeekerOp();
-    //opMode = new K9AutoTime();
-   // opMode = new K9IrSeeker();
-   // opMode = new K9Line();
-   //  opMode = new K9TankDrive();
-   // opMode = new K9TeleOp();
+    sharedpreferences = getSharedPreferences(SHARED_PREY_KEY, Context.MODE_PRIVATE);
+    String selectedOpModeName =  sharedpreferences.getString("opModeName",null);
+    if (selectedOpModeName == null) {
+          startActivity(new Intent(getBaseContext(), RobotControllerDriverOpModesActivity.class));
+          return;
+    }
 
+    setContentView(R.layout.activity_ftc_controller_driver);
+
+    try {
+        Class<?> c = Class.forName(selectedOpModeName);
+        Constructor<?> cons = c.getConstructor();
+        opMode = (AAASOpMode)cons.newInstance();
+    }
+    catch (Throwable e) {
+
+    }
 
     opMode.startInDebugMode(this);
     hardwareManager = opMode.getHardwareManager();
 
-    setContentView(R.layout.activity_ftc_controller_driver);
+
+
+    TextView opModeName = (TextView) findViewById(R.id.opModeName);
+    opModeName.setText("Op Mode: " + selectedOpModeName);
 
     LinearLayout sensorListView = (LinearLayout)findViewById(R.id.sensors);
     for  (SensorComponent  hc :  hardwareManager.getSensors() ) {
@@ -82,17 +95,6 @@ public class RobotControllerDriverActivity extends Activity {
               }
           }
       });
-
-      Button runFromDriverApp = (Button) findViewById(R.id.run_from_driver_app);
-      runFromDriverApp.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              startActivity(new Intent(getBaseContext(), FtcRobotControllerActivity.class));
-              finish();
-          }
-      });
-
-
 
 
   }
@@ -215,5 +217,29 @@ public class RobotControllerDriverActivity extends Activity {
     // don't destroy assets on screen rotation
   }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.ftc_robot_controller_driver, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+
+            case R.id.action_choose_op_mode:
+                startActivity(new Intent(getBaseContext(), RobotControllerDriverOpModesActivity.class));
+                return true;
+
+            case R.id.action_run_from_driver_app:
+                startActivity(new Intent(getBaseContext(), FtcRobotControllerActivity.class));
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

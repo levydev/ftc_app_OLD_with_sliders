@@ -52,7 +52,6 @@ public class FtcRobotControllerSettingsActivity extends Activity {
       // Load the preferences from an XML resource
       addPreferencesFromResource(R.xml.preferences);
 
-
       if (Build.MANUFACTURER.equalsIgnoreCase(Device.MANUFACTURER_ZTE) && Build.MODEL.equalsIgnoreCase(Device.MODEL_ZTE_SPEED)) {
         Preference launchSettings =  findPreference(getString(R.string.pref_launch_settings));
         launchSettings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

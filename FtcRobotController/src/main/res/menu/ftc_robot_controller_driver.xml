@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_choose_op_mode"
+        android:orderInCategory="9"
+        android:showAsAction="never"
+        android:title="Choose An Op Mode"/>
+
+    <item
+     android:id="@+id/action_run_from_driver_app"
+     android:orderInCategory="99"
+     android:showAsAction="never"
+     android:title="Run From Driver App"/>
+
+
+</menu>

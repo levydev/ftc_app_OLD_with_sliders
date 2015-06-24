@@ -48,6 +48,13 @@
     </activity>
 
 
+      <activity
+          android:name=".aaas.RobotControllerDriverOpModesActivity"
+          android:label="Select an Op Mode" >
+
+      </activity>
+
+
     <activity
       android:name=".FtcRobotControllerActivity"
       android:configChanges="orientation|screenSize"
