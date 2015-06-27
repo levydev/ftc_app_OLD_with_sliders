@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import org.aaas.stem.first.ftc.hardware.DcMotorComponent;
+import org.aaas.stem.first.ftc.hardware.GamepadComponent;
 import org.aaas.stem.first.ftc.hardware.ServoComponent;
 
 /**
@@ -73,6 +74,7 @@ public class K9TeleOp extends AAASOpMode {
 	DcMotorComponent motorLeft;
 	ServoComponent claw;
     ServoComponent arm;
+    GamepadComponent gamepadComponent1;
 
 	/**
 	 * Constructor
@@ -80,6 +82,11 @@ public class K9TeleOp extends AAASOpMode {
 	public K9TeleOp() {
 
 	}
+
+    @Override
+    public boolean isAutonomous() {
+        return false;
+    }
 
 	/*
 	 * Code to run when the op mode is first enabled goes here
@@ -113,7 +120,11 @@ public class K9TeleOp extends AAASOpMode {
 		arm = new ServoComponent(getHardwareManager(),"servo_1");
 		claw = new ServoComponent(getHardwareManager(),"servo_6");
 
-		// assign the starting position of the wrist and claw
+        String[] gpControls = {"left_stick_x","left_stick_y","a","b","x","y"};
+        gamepadComponent1 = new GamepadComponent(getHardwareManager(),"gamepad1" ,1 ,gpControls);
+
+
+        // assign the starting position of the wrist and claw
 		armPosition = 0.2;
 		clawPosition = 0.2;
 	}
@@ -137,8 +148,8 @@ public class K9TeleOp extends AAASOpMode {
 		// 1 is full down
 		// direction: left_stick_x ranges from -1 to 1, where -1 is full left
 		// and 1 is full right
-		float throttle = -gamepad1.left_stick_y;
-		float direction = gamepad1.left_stick_x;
+		float throttle = -gamepadComponent1.getLeft_stick_y();
+		float direction = gamepadComponent1.getLeft_stick_x();
 		float right = throttle - direction;
 		float left = throttle + direction;
 
@@ -156,24 +167,24 @@ public class K9TeleOp extends AAASOpMode {
 		motorLeft.setPower(left);
 
 		// update the position of the arm.
-		if (gamepad1.a) {
+		if (gamepadComponent1.isA()) {
 			// if the A button is pushed on gamepad1, increment the position of
 			// the arm servo.
 			armPosition += armDelta;
 		}
 
-		if (gamepad1.y) {
+		if (gamepadComponent1.isY()) {
 			// if the Y button is pushed on gamepad1, decrease the position of
 			// the arm servo.
 			armPosition -= armDelta;
 		}
 
 		// update the position of the claw
-		if (gamepad1.x) {
+		if (gamepadComponent1.isX()) {
 			clawPosition += clawDelta;
 		}
 
-		if (gamepad1.b) {
+		if (gamepadComponent1.isB()) {
 			clawPosition -= clawDelta;
 		}
 
@@ -193,11 +204,11 @@ public class K9TeleOp extends AAASOpMode {
 		 * will return a null value. The legacy NXT-compatible motor controllers
 		 * are currently write only.
 		 */
-        telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("arm", "arm:  " + String.format("%.2f", armPosition));
-        telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
-        telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
-        telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
+        sendTelemetry("Text", "*** Robot Data***");
+        sendTelemetry("arm", "arm:  " + String.format("%.2f", armPosition));
+        sendTelemetry("claw", "claw:  " + String.format("%.2f", clawPosition));
+        sendTelemetry("left tgt pwr", "left  pwr: " + String.format("%.2f", left));
+        sendTelemetry("right tgt pwr", "right pwr: " + String.format("%.2f", right));
 
 	}
 

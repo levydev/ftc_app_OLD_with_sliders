@@ -67,6 +67,10 @@ public class K9Line extends AAASOpMode {
 
 	}
 
+    @Override
+    public boolean isAutonomous() {
+        return true;
+    }
 	/*
 	 * Code to run when the op mode is first enabled goes here
 	 * 
@@ -169,10 +173,10 @@ public class K9Line extends AAASOpMode {
 		 * are currently write only.
 		 */
 
-		telemetry.addData("Text", "*** Robot Data***");
-		telemetry.addData("reflection", "reflection:  " + Double.toString(reflection));
-		telemetry.addData("left tgt pwr",  "left  pwr: " + Double.toString(left));
-		telemetry.addData("right tgt pwr", "right pwr: " + Double.toString(right));
+        sendTelemetry("Text", "*** Robot Data***");
+        sendTelemetry("reflection", "reflection:  " + Double.toString(reflection));
+        sendTelemetry("left tgt pwr",  "left  pwr: " + Double.toString(left));
+        sendTelemetry("right tgt pwr", "right pwr: " + Double.toString(right));
 	}
 
 	/*

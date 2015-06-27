@@ -31,7 +31,6 @@ public abstract class SensorComponent extends HardwareComponent {
         String userEnteredValue = debugSensorViewMap.get(keyName).getText().toString();
         getDebugMap().put(keyName , userEnteredValue);
 
-
     }
 
 

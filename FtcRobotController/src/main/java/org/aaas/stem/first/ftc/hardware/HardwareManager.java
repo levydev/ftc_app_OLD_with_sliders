@@ -4,6 +4,8 @@ package org.aaas.stem.first.ftc.hardware;
 import com.qualcomm.ftcrobotcontroller.aaas.RobotControllerDriverActivity;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.aaas.stem.first.ftc.opmodes.AAASOpMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +17,12 @@ public class HardwareManager {
     private List<SensorComponent> sensors = new ArrayList<SensorComponent>();
     private List <MotorComponent> motors = new ArrayList<MotorComponent> ();
 
-    public HardwareManager(HardwareMap hardwareMap ) {
+   private AAASOpMode opMode;
+
+    public HardwareManager(HardwareMap hardwareMap, AAASOpMode opMode) {
 
         this.hardwareMap =  hardwareMap;
+        this.opMode = opMode;
     }
 
     HardwareMap getHardwareMap() {
@@ -28,7 +33,7 @@ public class HardwareManager {
         this.hardwareMap = hardwareMap;
     }
 
-    boolean isDriverDebugMode() {
+    public boolean isDriverDebugMode() {
         return driverDebugMode;
     }
 
@@ -56,4 +61,7 @@ public class HardwareManager {
         return motors;
     }
 
+    public AAASOpMode getOpMode() {
+        return opMode;
+    }
 }

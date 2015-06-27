@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import org.aaas.stem.first.ftc.hardware.DcMotorComponent;
+import org.aaas.stem.first.ftc.hardware.GamepadComponent;
 import org.aaas.stem.first.ftc.hardware.ServoComponent;
 
 /**
@@ -73,6 +74,7 @@ public class K9TankDrive extends AAASOpMode {
     DcMotorComponent motorLeft;
 	ServoComponent claw;
 	ServoComponent arm;
+    GamepadComponent gamepadComponent1;
 
 	/**
 	 * Constructor
@@ -80,6 +82,11 @@ public class K9TankDrive extends AAASOpMode {
 	public K9TankDrive() {
 
 	}
+
+    @Override
+    public boolean isAutonomous() {
+        return false;
+    }
 
 	/*
 	 * Code to run when the op mode is first enabled goes here
@@ -111,10 +118,14 @@ public class K9TankDrive extends AAASOpMode {
 		arm = new ServoComponent(getHardwareManager(),"servo_1");
 		claw = new ServoComponent(getHardwareManager(),"servo_6");
 
+        String[] gpControls = {"left_stick_y","right_stick_y","a","b","x","y","left_bumper","left_trigger"};
+        gamepadComponent1 = new GamepadComponent(getHardwareManager(),"gamepad1" ,1 ,gpControls);
+
 		// assign the starting position of the wrist and claw
 		armPosition = 0.2;
 		clawPosition = 0.2;
 	}
+
 
 	/*
 	 * This method will be called repeatedly in a loop
@@ -133,8 +144,8 @@ public class K9TankDrive extends AAASOpMode {
 
         // tank drive
         // note that if y equal -1 then joystick is pushed all of the way forward.
-        float left = -gamepad1.left_stick_y;
-        float right = -gamepad1.right_stick_y;
+        float left = -gamepadComponent1.getLeft_stick_y();
+        float right = -gamepadComponent1.getRight_stick_y();
 
 		// clip the right/left values so that the values never exceed +/- 1
 		right = Range.clip(right, -1, 1);
@@ -150,37 +161,37 @@ public class K9TankDrive extends AAASOpMode {
 		motorLeft.setPower(left);
 
 		// update the position of the arm.
-		if (gamepad1.a) {
+		if (gamepadComponent1.isA()) {
 			// if the A button is pushed on gamepad1, increment the position of
 			// the arm servo.
 			armPosition += armDelta;
 		}
 
-		if (gamepad1.y) {
+		if (gamepadComponent1.isY()) {
 			// if the Y button is pushed on gamepad1, decrease the position of
 			// the arm servo.
 			armPosition -= armDelta;
 		}
 
         // update the position of the claw
-        if (gamepad1.left_bumper) {
+        if (gamepadComponent1.isLeft_bumper()) {
             clawPosition += clawDelta;
         }
 
-        if (gamepad1.left_trigger > 0.25) {
+        if (gamepadComponent1.getLeft_trigger() > 0.25) {
             clawPosition -= clawDelta;
         }
 
-        if (gamepad1.b) {
+        if (gamepadComponent1.isB()) {
             clawPosition -= clawDelta;
         }
 
 		// update the position of the claw
-		if (gamepad1.x) {
+		if (gamepadComponent1.isX()) {
 			clawPosition += clawDelta;
 		}
 
-		if (gamepad1.b) {
+		if (gamepadComponent1.isB()) {
 			clawPosition -= clawDelta;
 		}
 
@@ -199,11 +210,11 @@ public class K9TankDrive extends AAASOpMode {
 		 * are currently write only.
 		 */
 
-		telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("arm", "arm:  " + String.format("%.2f", armPosition));
-        telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
-		telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
-		telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
+        sendTelemetry("Text", "*** Robot Data***");
+        sendTelemetry("arm", "arm:  " + String.format("%.2f", armPosition));
+        sendTelemetry("claw", "claw:  " + String.format("%.2f", clawPosition));
+        sendTelemetry("left tgt pwr", "left  pwr: " + String.format("%.2f", left));
+        sendTelemetry("right tgt pwr", "right pwr: " + String.format("%.2f", right));
 	}
 
 	/*

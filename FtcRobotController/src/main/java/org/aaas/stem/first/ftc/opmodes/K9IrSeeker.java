@@ -64,6 +64,11 @@ public class K9IrSeeker extends AAASOpMode {
 
 	}
 
+    @Override
+    public boolean isAutonomous() {
+        return true;
+    }
+
 	/*
 	 * Code to run when the op mode is first enabled goes here
 	 * 
@@ -105,6 +110,7 @@ public class K9IrSeeker extends AAASOpMode {
 		 * with a name of "ir_seeker" configured for our robot.
 		 */
         irSeeker = new IrSeekerSensorComponent(getHardwareManager(),"ir_seeker");
+
 	}
 
 	/*
@@ -196,11 +202,11 @@ public class K9IrSeeker extends AAASOpMode {
 		 * are currently write only.
 		 */
 
-		telemetry.addData("Text", "*** Robot Data***");
-		telemetry.addData("angle", "angle:  " + Double.toString(angle));
-		telemetry.addData("strength", "sig strength: " + Double.toString(strength));
-		telemetry.addData("left tgt pwr",  "left  pwr: " + Double.toString(left));
-		telemetry.addData("right tgt pwr", "right pwr: " + Double.toString(right));
+        sendTelemetry("Text", "*** Robot Data***");
+        sendTelemetry("angle", "angle:  " + Double.toString(angle));
+        sendTelemetry("strength", "sig strength: " + Double.toString(strength));
+        sendTelemetry("left tgt pwr",  "left  pwr: " + Double.toString(left));
+        sendTelemetry("right tgt pwr", "right pwr: " + Double.toString(right));
 	}
 
 	/*

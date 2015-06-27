@@ -12,15 +12,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity;
 import com.qualcomm.ftcrobotcontroller.R;
+import com.qualcomm.ftcrobotcontroller.ViewLogsActivity;
+import com.qualcomm.robotcore.util.RobotLog;
 
 
+import org.aaas.stem.first.ftc.AAASOpModeRegister;
 import org.aaas.stem.first.ftc.hardware.HardwareComponent;
 import org.aaas.stem.first.ftc.hardware.HardwareManager;
 import org.aaas.stem.first.ftc.hardware.SensorComponent;
@@ -29,16 +34,19 @@ import org.aaas.stem.first.ftc.opmodes.AAASOpMode;
 import org.aaas.stem.first.ftc.opmodes.AutoRotateOp;
 
 import java.lang.reflect.Constructor;
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class RobotControllerDriverActivity extends Activity {
 
+    protected static final String VIEW_LOGS_ACTION = "com.qualcomm.ftcrobotcontroller.VIEW_LOGS";
+
     public static final String SHARED_PREY_KEY = "sharedPrefKey";
     private SharedPreferences sharedpreferences;
-    private HardwareManager hardwareManager;
-
     private AAASOpMode opMode;
 
+    private LinearLayout telemetryList;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -63,41 +71,66 @@ public class RobotControllerDriverActivity extends Activity {
     }
 
     opMode.startInDebugMode(this);
-    hardwareManager = opMode.getHardwareManager();
-
 
 
     TextView opModeName = (TextView) findViewById(R.id.opModeName);
-    opModeName.setText("Op Mode: " + selectedOpModeName);
+    opModeName.setText( selectedOpModeName);
+
 
     LinearLayout sensorListView = (LinearLayout)findViewById(R.id.sensors);
-    for  (SensorComponent  hc :  hardwareManager.getSensors() ) {
+    for  (SensorComponent  hc :  opMode.getHardwareManager().getSensors() ) {
         addHardwareComponentView(hc , sensorListView , true);
     }
 
     LinearLayout motorListView = (LinearLayout)findViewById(R.id.motors);
-    for  (MotorComponent  hc :  hardwareManager.getMotors() ) {
-       addHardwareComponentView(hc , motorListView , false);
+    for  (MotorComponent  hc :  opMode.getHardwareManager().getMotors() ) {
+          addHardwareComponentView(hc , motorListView , false);
     }
+
+    telemetryList =   (LinearLayout) findViewById(R.id.telemetry);
 
     Button sendButton = (Button) findViewById(R.id.send_button);
     sendButton.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
+
+              opMode.resetDebugTelemetry();
+
              // Toast.makeText(getApplicationContext(), "msg msg", Toast.LENGTH_SHORT).show();
-              for  (SensorComponent  hc :  hardwareManager.getSensors() ) {
+              for  (SensorComponent  hc :  opMode.getHardwareManager().getSensors() ) {
                   syncSensorValues(hc);
               }
               opMode.loop();
 
-              for  (MotorComponent  hc :  hardwareManager.getMotors() ) {
+              for  (MotorComponent  hc :  opMode.getHardwareManager().getMotors() ) {
                   syncMotorValues(hc);
               }
+
+              syncTelemetry();
+
           }
       });
 
 
   }
+
+    private void syncTelemetry() {
+
+        telemetryList.removeAllViews();
+
+
+        for (String teleItem : opMode.getDebugTelemetry()) {
+            LinearLayout rowLayout = rowLayoutOn(telemetryList);
+            TextView label = new TextView(this);
+            label.setText(teleItem);
+
+            rowLayout.addView(label);
+        }
+
+
+
+
+    }
 
     private LinearLayout rowLayoutOn(LinearLayout parentLayout) {
 
@@ -234,6 +267,12 @@ public class RobotControllerDriverActivity extends Activity {
 
             case R.id.action_run_from_driver_app:
                 startActivity(new Intent(getBaseContext(), FtcRobotControllerActivity.class));
+                return true;
+
+            case R.id.action_view_logs:
+                Intent viewLogsIntent = new Intent(VIEW_LOGS_ACTION);
+                viewLogsIntent.putExtra(ViewLogsActivity.FILENAME, RobotLog.getLogFilename(this));
+                startActivity(viewLogsIntent);
                 return true;
 
 

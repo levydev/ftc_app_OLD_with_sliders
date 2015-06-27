@@ -7,7 +7,6 @@
     android:id="@+id/entire_screen"
     android:orientation="vertical">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,23 +32,55 @@
             android:text="" />
 
 
+
+        <TextView
+            android:id="@+id/send_label"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/opModeName"
+            android:textStyle="bold"
+            android:text="Run once in OpMode.loop"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textSize="10sp"
+            android:layout_toRightOf="@id/send_label"
+            android:layout_below="@+id/opModeName"
+            android:text="Run" />
+
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_below="@+id/send_button"
+            android:background="#000000"
+            android:textColor="@color/bright_qcom_blue"
+            android:layout_marginBottom="10dip" />
+
+
+
         <LinearLayout
             android:id="@+id/sensors"
-            android:layout_below="@+id/opModeName"
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/line1"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
         </LinearLayout>
 
-      <Button
-          android:id="@+id/send_button"
-          android:layout_width="wrap_content"
-          android:layout_height="63dp"
-          android:layout_below="@+id/sensors"
-          android:text="Send Once To OpMode.loop" />
-
+      <View
+            android:id="@+id/line2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_below="@+id/sensors"
+            android:background="#000000"
+            android:textColor="@color/bright_qcom_blue"
+            android:layout_marginBottom="10dip" />
 
         <LinearLayout
             android:id="@+id/motors"
@@ -57,7 +88,41 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/send_button"
+            android:layout_below="@+id/line2"
+            android:layout_alignParentStart="true">
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_below="@+id/motors"
+            android:background="#000000"
+            android:textColor="@color/bright_qcom_blue"
+            android:layout_marginBottom="10dip" />
+
+
+        <TextView
+            android:id="@+id/telemetryLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#990000"
+            android:textStyle="bold"
+            android:minLines="2"
+            android:maxLines="4"
+            android:layout_below="@+id/line3"
+            android:text="Telemetry" />
+
+
+
+        <LinearLayout
+            android:id="@+id/telemetry"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/telemetryLabel"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
         </LinearLayout>
 
@@ -66,7 +131,7 @@
           android:id="@+id/textErrorMessage"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_below="@+id/motors"
+          android:layout_below="@+id/telemetry"
           android:textColor="#990000"
           android:textStyle="bold"
           android:minLines="2"

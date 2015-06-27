@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CompassSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.aaas.stem.first.ftc.hardware.ClockComponent;
 import org.aaas.stem.first.ftc.hardware.CompassSensorComponent;
 import org.aaas.stem.first.ftc.hardware.DcMotorComponent;
 
@@ -59,37 +60,46 @@ public class CompassCalibration extends AAASOpMode {
   CompassSensorComponent compass;
   DcMotorComponent motorRight;
   DcMotorComponent motorLeft;
+  ClockComponent clockComponent;
 
   public CompassCalibration() {
 
   }
+
+
+    @Override
+    public boolean isAutonomous() {
+        return true;
+    }
 
   @Override
   public void start() {
     compass = new CompassSensorComponent(getHardwareManager(),"compass");
     motorRight =  new DcMotorComponent(getHardwareManager(),"right");
     motorLeft = new DcMotorComponent(getHardwareManager(),"left");
+    clockComponent = new ClockComponent(getHardwareManager(),"clock");
 
-    motorRight.setDirection(DcMotor.Direction.REVERSE);
+
+      motorRight.setDirection(DcMotor.Direction.REVERSE);
 
     // Set the compass to calibration mode
     compass.setMode(CompassSensor.CompassMode.CALIBRATION_MODE);
-    telemetry.addData("Compass", "Compass in calibration mode");
+    sendTelemetry("Compass", "Compass in calibration mode");
 
     // calculate how long we should hold the current position
-    pauseTime = time + HOLD_POSITION;
+    pauseTime = clockComponent.getElapsedSeconds() + HOLD_POSITION;
   }
 
   @Override
   public void loop() {
 
     // make sure pauseTime has passed before we take any action
-    if (time > pauseTime) {
+    if (clockComponent.getElapsedSeconds() > pauseTime) {
 
       // have we turned around at least twice in 20 seconds?
       if (keepTurning) {
 
-        telemetry.addData("Compass", "Calibration mode. Turning the robot...");
+        sendTelemetry("Compass", "Calibration mode. Turning the robot...");
         DbgLog.msg("Calibration mode. Turning the robot...");
 
         // rotate the robot towards our goal direction
@@ -97,13 +107,13 @@ public class CompassCalibration extends AAASOpMode {
         motorLeft.setPower(MOTOR_POWER);
 
         // Only turn for 20 seconds (plus the two second pause at the beginning)
-        if (time > turnTime + HOLD_POSITION) {
+        if (clockComponent.getElapsedSeconds() > turnTime + HOLD_POSITION) {
           keepTurning = false;
           returnToMeasurementMode = true;
         }
       } else if (returnToMeasurementMode) {
 
-        telemetry.addData("Compass", "Returning to measurement mode");
+        sendTelemetry("Compass", "Returning to measurement mode");
         DbgLog.msg("Returning to measurement mode");
         motorRight.setPower(0.0);
         motorLeft.setPower(0.0);
@@ -112,16 +122,16 @@ public class CompassCalibration extends AAASOpMode {
         compass.setMode(CompassSensor.CompassMode.MEASUREMENT_MODE);
 
         // set a new pauseTime
-        pauseTime = time + HOLD_POSITION;
+        pauseTime = clockComponent.getElapsedSeconds() + HOLD_POSITION;
 
         returnToMeasurementMode = false;
         monitorCalibrationSuccess = true;
-        telemetry.addData("Compass", "Waiting for feedback from sensor...");
+        sendTelemetry("Compass", "Waiting for feedback from sensor...");
 
       } else if (monitorCalibrationSuccess) {
 
         String msg = calibrationMessageToString(compass.calibrationFailed());
-        telemetry.addData("Compass",  msg);
+        sendTelemetry("Compass", msg);
 
         if (compass.calibrationFailed()) {
           DbgLog.error("Calibration failed and needs to be re-run");
@@ -131,8 +141,15 @@ public class CompassCalibration extends AAASOpMode {
 
       }
       // set a new pauseTime
-      pauseTime = time + HOLD_POSITION;
+      pauseTime = clockComponent.getElapsedSeconds() + HOLD_POSITION;
     }
+
+    else {
+        if ( this.getHardwareManager().isDriverDebugMode()) {
+            sendTelemetry("Clock" , "Elapsed Time: " + clockComponent.getElapsedSeconds() + " has not exceeded pause time: " + pauseTime);
+        }
+    }
+
   }
 
   private String calibrationMessageToString(boolean failed) {

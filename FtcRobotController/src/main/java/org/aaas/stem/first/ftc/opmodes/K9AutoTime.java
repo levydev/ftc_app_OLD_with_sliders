@@ -72,6 +72,11 @@ public class K9AutoTime extends AAASOpMode {
 
 	}
 
+    @Override
+    public boolean isAutonomous() {
+        return true;
+    }
+
 	/*
 	 * Code to run when the op mode is first enabled goes here
 	 * 
@@ -176,11 +181,11 @@ public class K9AutoTime extends AAASOpMode {
 		 * are currently write only.
 		 */
 
-		telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("time", "elapsed time: " + Double.toString(this.time));
-        telemetry.addData("reflection", "reflection:  " + Double.toString(reflection));
-		telemetry.addData("left tgt pwr",  "left  pwr: " + Double.toString(left));
-		telemetry.addData("right tgt pwr", "right pwr: " + Double.toString(right));
+		sendTelemetry("Text", "*** Robot Data***");
+        sendTelemetry("time", "elapsed time: " + Double.toString(this.time));
+        sendTelemetry("reflection", "reflection:  " + Double.toString(reflection));
+        sendTelemetry("left tgt pwr",  "left  pwr: " + Double.toString(left));
+        sendTelemetry("right tgt pwr", "right pwr: " + Double.toString(right));
 	}
 
 	/*

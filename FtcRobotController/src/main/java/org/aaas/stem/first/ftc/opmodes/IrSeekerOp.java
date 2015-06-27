@@ -31,6 +31,11 @@ public class IrSeekerOp extends AAASOpMode {
 
 	}
 
+    @Override
+    public boolean isAutonomous() {
+        return true;
+    }
+
 	@Override
 	public void start() {
         irSeeker = new IrSeekerSensorComponent(getHardwareManager(),"ir_seeker");
@@ -78,6 +83,8 @@ public class IrSeekerOp extends AAASOpMode {
         }
 
         DbgLog.msg(irSeeker.toString());
+
+
     }
 
     @Override
