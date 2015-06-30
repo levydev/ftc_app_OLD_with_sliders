@@ -16,9 +16,18 @@ public class LightSensorComponent extends SensorComponent {
             lightSensor = getHardwareManager().getHardwareMap().lightSensor.get(componentName);
         }
         else {
-            getDebugMap().put("ledEnabled" , "false");
-            getDebugMap().put("lightLevel" , "0.0");
-            getDebugMap().put("status" , "");
+            getDebugMap().put("ledEnabled" , "true");
+            addDebugProperty("ledEnabled", "type", "Boolean");
+
+            getDebugMap().put("lightLevel", "0.0");
+            addDebugProperty("lightLevel", "type", "Double");
+            addDebugProperty("lightLevel", "min", "0");
+            addDebugProperty("lightLevel", "max", "1");
+            addDebugProperty("lightLevel", "decimalSpan", "10");
+
+
+            getDebugMap().put("status", "");
+            addDebugProperty("status", "type", "String");
 
         }
 

@@ -24,24 +24,67 @@ public class GamepadComponent extends SensorComponent {
             this.debugGamepadControlList = controlList;
 
             getDebugMap().put("left_stick_x" , "0.0");
-            getDebugMap().put("left_stick_y" , "0.0");
-            getDebugMap().put("right_stick_x" , "0.0");
-            getDebugMap().put("right_stick_y" , "0.0");
-            getDebugMap().put("left_trigger" , "0.0");
-            getDebugMap().put("right_trigger" , "0.0");
+            addDebugProperty("left_stick_x", "type", "Double");
+            addDebugProperty("left_stick_x", "min", "-1");
+            addDebugProperty("left_stick_x", "max", "1");
+            addDebugProperty("left_stick_x", "decimalSpan", "10");
 
-            getDebugMap().put("dpad_up" , "false");
-            getDebugMap().put("dpad_down" , "false");
-            getDebugMap().put("dpad_left" , "false");
-            getDebugMap().put("dpad_right" , "false");
-            getDebugMap().put("a" , "false");
-            getDebugMap().put("b" , "false");
-            getDebugMap().put("x" , "false");
-            getDebugMap().put("y" , "false");
-            getDebugMap().put("left_bumper" , "false");
-            getDebugMap().put("right_bumper" , "false");
+            getDebugMap().put("left_stick_y", "0.0");
+            addDebugProperty("left_stick_y", "type", "Double");
+            addDebugProperty("left_stick_y", "min", "-1");
+            addDebugProperty("left_stick_y", "max", "1");
+            addDebugProperty("left_stick_y", "decimalSpan", "10");
+
+            getDebugMap().put("right_stick_x", "0.0");
+            addDebugProperty("right_stick_x", "type", "Double");
+            addDebugProperty("right_stick_x", "min", "-1");
+            addDebugProperty("right_stick_x", "max", "1");
+            addDebugProperty("right_stick_x", "decimalSpan", "10");
+
+            getDebugMap().put("right_stick_y", "0.0");
+            addDebugProperty("right_stick_y", "type", "Double");
+            addDebugProperty("right_stick_y", "min", "-1");
+            addDebugProperty("right_stick_y", "max", "1");
+            addDebugProperty("right_stick_y", "decimalSpan", "10");
+
+
+            getDebugMap().put("left_trigger", "0.0");
+            addDebugProperty("left_trigger", "type", "Double");
+            addDebugProperty("left_trigger", "min", "0");
+            addDebugProperty("left_trigger", "max", "1");
+            addDebugProperty("left_trigger", "decimalSpan", "10");
+
+            getDebugMap().put("right_trigger", "0.0");
+            addDebugProperty("right_trigger", "type", "Double");
+            addDebugProperty("right_trigger", "min", "0");
+            addDebugProperty("right_trigger", "max", "1");
+            addDebugProperty("right_trigger", "decimalSpan", "10");
+
+            getDebugMap().put("dpad_up", "false");
+            addDebugProperty("dpad_up", "type", "Boolean");
+            getDebugMap().put("dpad_down", "false");
+            addDebugProperty("dpad_down", "type", "Boolean");
+            getDebugMap().put("dpad_left", "false");
+            addDebugProperty("dpad_left", "type", "Boolean");
+            getDebugMap().put("dpad_right", "false");
+            addDebugProperty("dpad_right", "type", "Boolean");
+            getDebugMap().put("a", "false");
+            addDebugProperty("a", "type", "Boolean");
+            getDebugMap().put("b", "false");
+            addDebugProperty("b", "type", "Boolean");
+            getDebugMap().put("x", "false");
+            addDebugProperty("x", "type", "Boolean");
+            getDebugMap().put("y", "false");
+            addDebugProperty("y", "type", "Boolean");
+            getDebugMap().put("left_bumper", "false");
+            addDebugProperty("left_bumper", "type", "Boolean");
+            getDebugMap().put("right_bumper", "false");
+            addDebugProperty("right_bumper", "type", "Boolean");
 
         }
+
+
+
      
 
     }

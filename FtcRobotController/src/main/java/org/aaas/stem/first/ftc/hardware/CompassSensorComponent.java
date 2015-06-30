@@ -17,8 +17,16 @@ public class CompassSensorComponent extends SensorComponent {
         }
         else {
             getDebugMap().put("direction" ,"0.0");
-            getDebugMap().put("mode" ,CompassSensor.CompassMode.MEASUREMENT_MODE.toString());
-            getDebugMap().put("calibrationFailed" ,"false");
+            addDebugProperty("direction", "type", "Double");
+            addDebugProperty("direction", "min", "-360");
+            addDebugProperty("direction", "max", "360");
+            addDebugProperty("direction", "decimalSpan", "1");
+
+            getDebugMap().put("mode", CompassSensor.CompassMode.MEASUREMENT_MODE.toString());
+            addDebugProperty("mode", "type", "String");
+
+            getDebugMap().put("calibrationFailed", "false");
+            addDebugProperty("calibrationFailed", "type", "Boolean");
         }
 
 

@@ -9,7 +9,12 @@ public class ClockComponent extends SensorComponent {
         super(hardwareManager , componentName);
 
         if (isDriverDebugMode() ) {
-            getDebugMap().put("elapsedSeconds" , "3");
+            getDebugMap().put("elapsedSeconds", "3");
+            addDebugProperty("elapsedSeconds", "type", "Double");
+            addDebugProperty("elapsedSeconds", "min", "0");
+            addDebugProperty("elapsedSeconds", "max", "30");
+            addDebugProperty("elapsedSeconds", "decimalSpan", "1");
+
         }
 
     }

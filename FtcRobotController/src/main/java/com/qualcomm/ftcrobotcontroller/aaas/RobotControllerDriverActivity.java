@@ -7,16 +7,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.LinearLayout.LayoutParams;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity;
@@ -168,12 +173,68 @@ public class RobotControllerDriverActivity extends Activity {
             label.setText(keyName);
             rowLayout.addView(label);
 
+
             if ( isSensorList) {
-                EditText valueView = new EditText(this);
-                //valueView.setLayoutParams(new LinearLayout.LayoutParams(40, 50));
+                SensorComponent sensorComponent = ((SensorComponent)hardwareComponent);
+                if (sensorComponent.isBooleanValue(keyName) ) {
+                    CheckBox valueView = new CheckBox(this);
+                    rowLayout.addView(valueView);
+                    sensorComponent.addDebugView(keyName, valueView);
+                    valueView.setChecked(sensorComponent.geBooleanValueOn(keyName));
+                    continue;
+                }
+                if (sensorComponent.isStringValue(keyName) ) {
+                    final EditText valueView = new EditText(this);
+                    rowLayout.addView(valueView);
+
+                    sensorComponent.addDebugView(keyName, valueView);
+                    valueView.setText(sensorComponent.valueOn(keyName));
+                    continue;
+                }
+
+                final EditText valueView = new EditText(this);
                 rowLayout.addView(valueView);
-                ((SensorComponent)hardwareComponent).addDebugView(keyName, valueView);
-                valueView.setText(hardwareComponent.valueOn(keyName));
+
+                sensorComponent.addDebugView(keyName, valueView);
+                valueView.setText(sensorComponent.valueOn(keyName));
+
+                final double min = sensorComponent.getMinOn(keyName);
+                final double max = sensorComponent.getMaxOn(keyName);
+                final double decimalSpan = sensorComponent.getDecimalSpanOn(keyName);
+
+                SeekBar seekBar = new SeekBar(this);
+                seekBar.setVisibility(View.VISIBLE);
+                LayoutParams lp = new LayoutParams(250, LayoutParams.WRAP_CONTENT);
+                lp.setMargins(0, 26, 0, 0);
+                seekBar.setLayoutParams(lp);
+
+                seekBar.setMax((int) ((max - min) * decimalSpan));
+                seekBar.setProgress((int) Math.abs(min));
+
+                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+                    public void onStopTrackingTouch(SeekBar arg0) {
+
+
+                    }
+
+                    public void onStartTrackingTouch(SeekBar arg0) {
+
+                    }
+
+                    public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
+
+                        double dbVal =  ( arg1 /  decimalSpan )  + min;
+                        dbVal = Math.round(dbVal * 1000 )/ 1000d;
+                        valueView.setText(String.valueOf(dbVal));
+
+
+                    }
+                });
+
+
+                rowLayout.addView(seekBar);
+
 
             }
             else {
